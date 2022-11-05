@@ -1,13 +1,13 @@
 import React from "react";
 import NavbarDash from "../components/navbar";
 
-const ProjectView = () => {
+const Home = () => {
   return (
     <div>
-      <NavbarDash></NavbarDash>
-      pdada
+        <NavbarDash></NavbarDash>
+      home
     </div>
   );
 };
 
-export default ProjectView;
+export default Home;

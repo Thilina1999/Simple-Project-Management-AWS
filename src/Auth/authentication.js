@@ -9,11 +9,6 @@ const Auth = () => {
         <Authenticator
           socialProviders={["amazon", "apple", "facebook", "google"]}
         >
-          {({ signOut, user }) => (
-            <div>
-              
-            </div>
-          )}
         </Authenticator>
     );
 };

@@ -4,17 +4,20 @@ import ProjectView from './containers/projectView';
 import Auth from '../src/Auth/authentication'
 import Home from '../src/containers/home'
 import { useAuthenticator } from "@aws-amplify/ui-react";
+import NavbarDash from "./components/navbar";
 import "@aws-amplify/ui-react/styles.css";
+
+
 
 
 function App() {
    const { authStatus } = useAuthenticator((context) => [context.authStatus]);
 
   return (
-    <div>
+    <div className="app">
       <BrowserRouter>
         {authStatus === "configuring" && "Loading..."}
-        {authStatus !== "authenticated" ? <Auth/> : <Home />}
+        {authStatus !== "authenticated" ? <Auth /> : <NavbarDash/>}
         <Routes>
           <Route path="/home" element={<Home></Home>} exact></Route>
           <Route

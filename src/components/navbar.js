@@ -2,6 +2,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useAuthenticator } from "@aws-amplify/ui-react";
+import { Link } from "react-router-dom";
 
 function NavbarDash() {
     const { user, signOut } = useAuthenticator((context) => [context.user]);
@@ -15,7 +16,9 @@ function NavbarDash() {
           <Nav className="me-auto">
             <Nav.Link href="/home">Home</Nav.Link>
             <Nav.Link href="/project">Project View</Nav.Link>
-            <button onClick={signOut}>Sign out</button>
+            <Link to="/">
+              <button onClick={signOut}>Sign out</button>
+            </Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

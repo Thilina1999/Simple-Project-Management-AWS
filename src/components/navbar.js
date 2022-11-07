@@ -14,11 +14,9 @@ function NavbarDash() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/home">Home</Nav.Link>
-            <Nav.Link href="/project">Project View</Nav.Link>
-            <Link to="/">
+        
               <button onClick={signOut}>Sign out</button>
-            </Link>
+
           </Nav>
         </Navbar.Collapse>
       </Container>

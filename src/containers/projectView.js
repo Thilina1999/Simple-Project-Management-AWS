@@ -6,23 +6,32 @@ import Table from 'react-bootstrap/Table';
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
-import { getAllProject, addProject } from "../services/ProjectService";
+import {
+  getAllProject,
+  addProject,
+  deleteProject,
+  getProjectByUserId,
+} from "../services/ProjectService";
 
 const ProjectView = () => {
   const [project, setProject] = useState([]);
   const [projectName,setProjectName]=useState("");
   const [startDate,setStartDate]=useState("");
   const [endDate, setEndDate] = useState("");
+  
 
- 
+  
+  let count=1;
+  let userId2="";
+  
 
-  useEffect(()=>{    
-      getAllProject().then((res) => {
-        setProject(res.data);
-        console.log(res);
-      });
- 
-  },[])
+  useEffect(() => {
+    userId2 = localStorage.getItem("username");
+    getProjectByUserId(userId2).then((res) => {
+      setProject(res.data);
+    });
+  });
+  
 
   const SendData =(e)=>{
     e.preventDefault();
@@ -30,13 +39,21 @@ const ProjectView = () => {
        projectName,
        startDate,
        endDate,
+       userId:userId2,
      };
      addProject(addProjectData).then(res => {
-      console.log(res);
-      window.location.reload(true);
+     }).catch(err => {
+      console.log(err);
+      setProjectName("");
      });
+     
   }
-
+const Delete =(id)=>{
+  deleteProject(id).then(res => {
+  }).catch(err => {
+    console.log("adad",err);
+  })
+}
   return (
     <>
       <NavbarDash></NavbarDash>
@@ -125,23 +142,29 @@ const ProjectView = () => {
                         <tbody>
                           {project.map((projectlist) => {
                             return (
-                              <tr>
-                                <td>{projectlist.id}</td>
-                                <td>{projectlist.projectName}</td>
-                                <td>{projectlist.startDate}</td>
-                                <td>{projectlist.endDate}</td>
+                              
+                                <tr>
+                                  <td>{count++}</td>
+                                  <td>{projectlist.projectName}</td>
+                                  <td>{projectlist.startDate}</td>
+                                  <td>{projectlist.endDate}</td>
 
-                                <IconButton>
-                                  <span class="icon text-black-50">
-                                    <UpgradeIcon />
-                                  </span>
-                                </IconButton>
-                                <IconButton>
-                                  <span class="icon text-black-50">
-                                    <DeleteIcon />
-                                  </span>
-                                </IconButton>
-                              </tr>
+                                  <IconButton>
+                                    <span class="icon text-black-50">
+                                      <UpgradeIcon />
+                                    </span>
+                                  </IconButton>
+                                  <IconButton
+                                    onClick={() => {
+                                      Delete(projectlist.id);
+                                    }}
+                                  >
+                                    <span class="icon text-black-50">
+                                      <DeleteIcon />
+                                    </span>
+                                  </IconButton>
+                                </tr>
+                             
                             );
                           })}
                         </tbody>

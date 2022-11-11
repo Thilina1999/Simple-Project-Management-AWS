@@ -20,10 +20,12 @@ const ProjectView = () => {
   const  [projectName , setProjectName ]=useState("");
   const [ startDate , setStartDate ]=useState("");
   const [ endDate , setEndDate ] = useState("");
+
     const [projectNameU, setProjectNameU] = useState("");
     const [startDateU, setStartDateU] = useState("");
     const [endDateU, setEndDateU] = useState("");
   const [ show , setShow ] = useState(false);
+
   const [ projectid , setProjectId ] = useState("");
 
   
@@ -252,11 +254,13 @@ const Delete =(id)=>{
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
-          <Modal.Title className="m-0 font-weight-bold text-primary">
-            Modal heading
-          </Modal.Title>
-        </Modal.Header>
+        <div className="card-header py-3">
+          <Modal.Header>
+              <Modal.Title className="m-0 font-weight-bold text-primary">
+                Project Data Update Form
+              </Modal.Title>
+          </Modal.Header>
+        </div>
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="updateFormBasicProjectName">
@@ -266,7 +270,7 @@ const Delete =(id)=>{
                 onChange={(e) => {
                   setProjectNameU(e.target.value);
                 }}
-             value={projectNameU}
+                value={projectNameU}
               />
             </Form.Group>
 
@@ -277,8 +281,7 @@ const Delete =(id)=>{
                 onChange={(e) => {
                   setStartDateU(e.target.value);
                 }}
-               value={startDateU}
-               
+                value={startDateU}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="updateFormBasicEndDate">
@@ -288,7 +291,7 @@ const Delete =(id)=>{
                 onChange={(e) => {
                   setEndDateU(e.target.value);
                 }}
-             value={endDateU}
+                value={endDateU}
               />
             </Form.Group>
             <br></br>
@@ -296,10 +299,10 @@ const Delete =(id)=>{
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
+          <Button variant="secondary" onClick={handleClose} className="icon">
             Close
           </Button>
-          <Button variant="primary" onClick={update}>
+          <Button variant="primary" onClick={update} className="icon">
             Save Changes
           </Button>
         </Modal.Footer>

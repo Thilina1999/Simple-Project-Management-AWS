@@ -22,7 +22,6 @@ function App() {
           <ProjectView/>
         )}
         <Routes>
-          
         </Routes>
       </BrowserRouter>
     </div>

@@ -7,3 +7,11 @@
   margin: auto;
 }
 
+
+.icon:hover {
+  transform: translateY(-1px) scale(1.005) translateZ(0);
+}
+.center {
+  padding: 170px 0;
+  text-align: center;
+}

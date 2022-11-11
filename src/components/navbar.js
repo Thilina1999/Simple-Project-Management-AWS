@@ -3,6 +3,11 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { Navigate } from "react-router-dom";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import NavDropdown from "react-bootstrap/NavDropdown";
+import LogoutIcon from "@mui/icons-material/Logout";
+import IconButton from "@mui/material/IconButton";
 
 function NavbarDash() {
     const { user, signOut } = useAuthenticator((context) => [context.user]);
@@ -14,14 +19,23 @@ function NavbarDash() {
     }
 
   return (
-    <Navbar bg="light" expand="lg">
-      <Container>
-        <Navbar.Brand>Project </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <button onClick={Loged}>Sign out</button>
-          </Nav>
+    <Navbar bg="dark" variant="dark">
+      <Container fluid className="container">
+        <Navbar.Brand>Project Detail</Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          <Nav
+            className="me-auto my-1 my-lg-0"
+            style={{ maxHeight: "100px" }}
+            navbarScroll
+          ></Nav>
+          <IconButton className="d-flex" onClick={Loged}>
+            <LogoutIcon
+              color="primary"
+              fontSize="large"
+              className="icon"
+            ></LogoutIcon>
+          </IconButton>
         </Navbar.Collapse>
       </Container>
     </Navbar>

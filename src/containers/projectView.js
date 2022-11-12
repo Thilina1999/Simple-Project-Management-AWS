@@ -7,6 +7,7 @@ import UpgradeIcon from "@mui/icons-material/Upgrade";
 import DeleteIcon from "@mui/icons-material/Delete";
 import IconButton from "@mui/material/IconButton";
 import Modal from "react-bootstrap/Modal";
+import {  useAuthenticator } from "@aws-amplify/ui-react";
 import {
   addProject,
   deleteProject,
@@ -16,6 +17,8 @@ import {
 } from "../services/ProjectService";
 
 const ProjectView = () => {
+   const { user } = useAuthenticator((context) => [context.user]);
+
   const [ project , setProject ] = useState([]);
   const  [projectName , setProjectName ]=useState("");
   const [ startDate , setStartDate ]=useState("");
@@ -27,19 +30,20 @@ const ProjectView = () => {
   const [ show , setShow ] = useState(false);
 
   const [ projectid , setProjectId ] = useState("");
-
-  
+ 
   let count=1;
-  let userId2="";
+ 
   
 
   useEffect(() => {
-    userId2 = localStorage.getItem("username");
-    getProjectByUserId(userId2).then((res) => {
-      setProject(res.data);
-    });
-  });
+    getData();
+  },[]);
   
+  const getData=()=>{
+     getProjectByUserId(user.username).then((res) => {
+       setProject(res.data);
+     });
+  }
 
   const SendData =(e)=>{
     e.preventDefault();
@@ -47,13 +51,15 @@ const ProjectView = () => {
        projectName,
        startDate,
        endDate,
-       userId:userId2,
+       userId:user.username,
      };
      addProject(addProjectData).then(res => {
+                  setProjectName("");
+                  setStartDate("");
+                  setEndDate("");
+                  getData();
             alert("project add successfully")
-            setProjectName("");
-            setStartDate("");
-            setEndDate("");
+
             
      }).catch(err => {
       console.log("add error",err);
@@ -62,6 +68,7 @@ const ProjectView = () => {
   }
 const Delete =(id)=>{
   deleteProject(id).then(res => {
+    getData();
   }).catch(err => {
     console.log("delete error",err);
   })
@@ -74,6 +81,7 @@ const Delete =(id)=>{
                   setProjectNameU(res.data.projectName);
                   setStartDateU(res.data.startDate);
                   setEndDateU(res.data.endDate);
+                  
       }).catch(err => {
         console.log("error get data from id",err);
       })
@@ -90,11 +98,13 @@ const Delete =(id)=>{
       };
       updateProjectById(Number(projectid), updateProjectData)
         .then((res) => {
+                    setProjectNameU("");
+                    setStartDateU("");
+                    setEndDateU("");
+                    handleClose();
+                    getData();
           alert("update data successfully");
-          setProjectNameU("");
-          setStartDateU("");
-          setEndDateU("");
-          handleClose();
+
         })
         .catch((err) => {
           console.log("update error", err);
@@ -256,9 +266,9 @@ const Delete =(id)=>{
       >
         <div className="card-header py-3">
           <Modal.Header>
-              <Modal.Title className="m-0 font-weight-bold text-primary">
-                Project Data Update Form
-              </Modal.Title>
+            <Modal.Title className="m-0 font-weight-bold text-primary">
+              Project Data Update Form
+            </Modal.Title>
           </Modal.Header>
         </div>
         <Modal.Body>
@@ -281,7 +291,7 @@ const Delete =(id)=>{
                 onChange={(e) => {
                   setStartDateU(e.target.value);
                 }}
-                value={startDateU}
+                value={startDateU.split(/[T:]/)[0]}
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="updateFormBasicEndDate">
@@ -291,7 +301,7 @@ const Delete =(id)=>{
                 onChange={(e) => {
                   setEndDateU(e.target.value);
                 }}
-                value={endDateU}
+                value={endDateU.split(/[T:]/)[0]}
               />
             </Form.Group>
             <br></br>

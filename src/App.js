@@ -10,7 +10,7 @@ import "@aws-amplify/ui-react/styles.css";
 function App() {
    const { authStatus } = useAuthenticator((context) => [context.authStatus]);
     
-    console.log(authStatus)
+
 
   return (
     <div className="app">
